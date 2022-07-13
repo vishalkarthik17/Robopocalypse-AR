@@ -17,14 +17,13 @@ public class ShootScript : MonoBehaviour
     public Camera MainCam;
     public TextMeshProUGUI ammoText;
     public Animator animator;
-    public GameObject robotPrefab;
+
 
     private ARRaycastManager arRaycastManager;
     static List<ARRaycastHit> hitlist = new List<ARRaycastHit>();
 
     public ParticleSystem muzzleFlash;
-    public AttackPlayer ap;
-    public TextMeshProUGUI temp;
+    
     void Awake()
     {
         arRaycastManager = GetComponent<ARRaycastManager>();
@@ -36,7 +35,6 @@ public class ShootScript : MonoBehaviour
     {
         currentAmmo = maxAmmo;
 
-        ap = robotPrefab.GetComponent<AttackPlayer>();
     }
 
     // Update is called once per frame
@@ -80,20 +78,22 @@ public class ShootScript : MonoBehaviour
                 if (selection.CompareTag("EnemyHead"))
                 {
                     //Play particle animation of enemy getting destroyed.
+                    AttackPlayer ap= selection.parent.gameObject.GetComponent<AttackPlayer>();
                     int curHealth = ap.health;
                     curHealth -= 20;
                     ap.setHealth(curHealth);
-                    temp.SetText(curHealth.ToString());
+                    
                     if(curHealth<=0)
-                        Destroy(selection.gameObject);
+                        Destroy(selection.parent.gameObject);
 
                 }
                 if (selection.CompareTag("EnemyBody"))
                 {
+                    AttackPlayer ap = selection.gameObject.GetComponent<AttackPlayer>();
                     int curHealth = ap.health;
                     curHealth -= 10;
                     ap.setHealth(curHealth);
-                    temp.SetText(curHealth.ToString());
+                    
                     if (curHealth <= 0)
                         Destroy(selection.gameObject);
                 }

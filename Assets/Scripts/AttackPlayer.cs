@@ -1,6 +1,7 @@
   using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.AI;
 using TMPro;
 
@@ -12,19 +13,19 @@ public class AttackPlayer : MonoBehaviour
     public float timeBetweenAttacks;
     public bool alreadyAttacked=false; 
     public GameObject Projectile;
-    public TextMeshPro healthText;
+    public Slider slider;
 
     public void setHealth(int newHealth) {
         health = newHealth;
-        healthText.SetText(health.ToString());
+        slider.value = health;
     }
     // Start is called before the first frame update
     void Awake()
     {
         player = GameObject.Find("PlayerObj").transform;
         agent = GetComponent<NavMeshAgent>();
-        health = 90;
-        healthText.SetText("69");
+        health = 100;
+        slider.value = health;
     }
     
     // Update is called once per frame

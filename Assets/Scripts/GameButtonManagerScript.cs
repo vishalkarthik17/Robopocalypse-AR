@@ -28,12 +28,13 @@ public class GameButtonManagerScript : MonoBehaviour
 
     public void startGame(){
         preGamePanel.SetActive(false);
-        Vector3 referencePoint = ARCam.transform.position + Camera.main.transform.forward * 11.0f;
-        //Vector3 referencePoint = new Vector3(ARCam.transform.localPosition.x, ARCam.transform.localPosition.y, ARCam.transform.localPosition.z+11.0f);
-        Quaternion rot = Quaternion.Inverse(ARCam.transform.rotation);
-        rot.z = 0;
-        Object.Instantiate(TempRobot, referencePoint,Quaternion.identity);
-        
+        Vector3 referencePoint1 = ARCam.transform.position + Camera.main.transform.forward * 11.0f;
+        Vector3 referencePoint2 = ARCam.transform.position + Camera.main.transform.forward * 11.0f;
+        referencePoint1.x -= 2.0f;
+        referencePoint2.x += 2.0f;
+        Object.Instantiate(TempRobot, referencePoint1,Quaternion.identity);
+        Object.Instantiate(TempRobot, referencePoint2, Quaternion.identity);
+
         shootPanel.SetActive(true);
     }
 }
