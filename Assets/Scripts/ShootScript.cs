@@ -23,6 +23,7 @@ public class ShootScript : MonoBehaviour
     static List<ARRaycastHit> hitlist = new List<ARRaycastHit>();
 
     public ParticleSystem muzzleFlash;
+    public GameObject impactFX;
     
     void Awake()
     {
@@ -82,9 +83,11 @@ public class ShootScript : MonoBehaviour
                     int curHealth = ap.health;
                     curHealth -= 20;
                     ap.setHealth(curHealth);
-                    
-                    if(curHealth<=0)
+
+                    Instantiate(impactFX, hitObj.point, Quaternion.LookRotation(hitObj.normal));
+                    if (curHealth<=0)
                         Destroy(selection.parent.gameObject);
+            
 
                 }
                 if (selection.CompareTag("EnemyBody"))
@@ -93,12 +96,12 @@ public class ShootScript : MonoBehaviour
                     int curHealth = ap.health;
                     curHealth -= 10;
                     ap.setHealth(curHealth);
-                    
+                    Instantiate(impactFX, hitObj.point, Quaternion.LookRotation(hitObj.normal));
                     if (curHealth <= 0)
                         Destroy(selection.gameObject);
                 }
 
-
+                
             }
         }
         

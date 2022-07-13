@@ -10,6 +10,7 @@ public class GameButtonManagerScript : MonoBehaviour
     public GameObject shootPanel;
     public GameObject TempRobot;
     public Camera ARCam;
+    public GameObject infplane;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,11 +28,15 @@ public class GameButtonManagerScript : MonoBehaviour
     }
 
     public void startGame(){
+        Transform plane = GameObject.FindGameObjectsWithTag("infplane")[0].transform;
         preGamePanel.SetActive(false);
         Vector3 referencePoint1 = ARCam.transform.position + Camera.main.transform.forward * 11.0f;
         Vector3 referencePoint2 = ARCam.transform.position + Camera.main.transform.forward * 11.0f;
+        referencePoint1.y = plane.position.y + 2.0f;
+        referencePoint2.y = plane.position.y + 2.0f;
         referencePoint1.x -= 2.0f;
         referencePoint2.x += 2.0f;
+        
         Object.Instantiate(TempRobot, referencePoint1,Quaternion.identity);
         Object.Instantiate(TempRobot, referencePoint2, Quaternion.identity);
 

@@ -714,6 +714,7 @@ MonoBehaviour:
   ammoText: {fileID: 1302841431}
   animator: {fileID: 63068015}
   muzzleFlash: {fileID: 2139883692}
+  impactFX: {fileID: 6712558555861755962, guid: a686f78cfdfc9814cad043195e232ca9, type: 3}
 --- !u!1 &318798498
 GameObject:
   m_ObjectHideFlags: 0

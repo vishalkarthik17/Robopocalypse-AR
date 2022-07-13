@@ -18,6 +18,7 @@ public class ARTapPlane : MonoBehaviour
     public GameObject scanPanel;
     public GameObject preGamePanel;
     public GameObject ARCam;
+    
 
     private void Awake()
     {
@@ -55,8 +56,12 @@ public class ARTapPlane : MonoBehaviour
             {
                 var hitPose = hitlist[0].pose;
 
-                //Object.Instantiate(infplane, hitPose.position, hitPose.rotation);  
-                Object.Instantiate(infplane, ARCam.transform.position, hitPose.rotation);
+                //Object.Instantiate(infplane, hitPose.position, hitPose.rotation); 
+                Vector3 campos = ARCam.transform.position;
+                campos.y = campos.y - 2.5f;
+               
+                 
+                    Object.Instantiate(infplane,hitPose.position, hitPose.rotation);
                 touched = true;
                 scanPanel.SetActive(false);
                 preGamePanel.SetActive(true);
