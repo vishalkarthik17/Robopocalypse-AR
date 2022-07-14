@@ -32,8 +32,8 @@ public class GameButtonManagerScript : MonoBehaviour
         preGamePanel.SetActive(false);
         Vector3 referencePoint1 = ARCam.transform.position + Camera.main.transform.forward * 11.0f;
         Vector3 referencePoint2 = ARCam.transform.position + Camera.main.transform.forward * 11.0f;
-        referencePoint1.y = plane.position.y + 2.0f;
-        referencePoint2.y = plane.position.y + 2.0f;
+        referencePoint1.y = plane.position.y + 1.0f;
+        referencePoint2.y = plane.position.y + 1.0f;
         referencePoint1.x -= 2.0f;
         referencePoint2.x += 2.0f;
         
@@ -41,5 +41,8 @@ public class GameButtonManagerScript : MonoBehaviour
         Object.Instantiate(TempRobot, referencePoint2, Quaternion.identity);
 
         shootPanel.SetActive(true);
+    }
+    public void replayGame() {
+        SceneManager.LoadScene("Level0");
     }
 }

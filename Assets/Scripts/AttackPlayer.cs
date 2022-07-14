@@ -14,6 +14,7 @@ public class AttackPlayer : MonoBehaviour
     public bool alreadyAttacked=false; 
     public GameObject Projectile;
     public Slider slider;
+    public GameObject gunMuzzle;
 
     public void setHealth(int newHealth) {
         health = newHealth;
@@ -39,8 +40,8 @@ public class AttackPlayer : MonoBehaviour
         
         if (!alreadyAttacked) {
             //attack here
-            Rigidbody rb = Instantiate(Projectile,transform.position,Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce((player.position - transform.position) * 150f);
+            Rigidbody rb = Instantiate(Projectile, gunMuzzle.transform.position,Quaternion.identity).GetComponent<Rigidbody>();
+            rb.AddForce((player.position - gunMuzzle.transform.position) * 150f);
             
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);

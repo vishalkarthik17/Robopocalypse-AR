@@ -12,6 +12,7 @@ public class ShootScript : MonoBehaviour
 {
     public int maxAmmo = 15;
     public int currentAmmo;
+    public int remainingAmmo;
     public float reloadTime = 1f;
     public bool isReloading = false;
     public Camera MainCam;
@@ -35,13 +36,14 @@ public class ShootScript : MonoBehaviour
     void Start()
     {
         currentAmmo = maxAmmo;
+        remainingAmmo -= maxAmmo;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        ammoText.SetText(currentAmmo.ToString()+"/15");
+        ammoText.SetText(currentAmmo.ToString() + "/" + remainingAmmo.ToString()) ;
         if (isReloading) {
             ammoText.SetText("Reloading...");
             return;
@@ -60,15 +62,18 @@ public class ShootScript : MonoBehaviour
         animator.SetBool("Reloading", true);
         yield return new WaitForSeconds(reloadTime);
         currentAmmo = maxAmmo;
+        remainingAmmo = remainingAmmo - maxAmmo;
         animator.SetBool("Reloading", false);
         isReloading = false;
         
     }
     public void shootBullet() {
-        if (!isReloading) {
+        if (!isReloading) 
+        {
             muzzleFlash.Play();
 
-            currentAmmo = currentAmmo - 1; ;
+            currentAmmo = currentAmmo - 1;
+            
 
             var ray = MainCam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
             RaycastHit hitObj;

@@ -8,6 +8,7 @@ public class PlayerScript : MonoBehaviour
 {
     public int health;
     public Slider slider;
+    public GameObject gameOverPanel;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +28,9 @@ public class PlayerScript : MonoBehaviour
             if(health>=0 && health<=100)
             slider.value = health;
             Destroy(other.gameObject);
+            if (health <= 0) {
+                gameOverPanel.SetActive(true);
+            }
             
         }
     }
