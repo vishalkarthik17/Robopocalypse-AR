@@ -15,6 +15,7 @@ public class AttackPlayer : MonoBehaviour
     public GameObject Projectile;
     public Slider slider;
     public GameObject gunMuzzle;
+    public GameObject playerObj;
 
     public void setHealth(int newHealth) {
         health = newHealth;
@@ -32,14 +33,16 @@ public class AttackPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        AttackPlayerFunction();
         transform.LookAt(player);
+        AttackPlayerFunction();
+        
     }
 
     public void AttackPlayerFunction() {
         
-        if (!alreadyAttacked) {
+        if (!alreadyAttacked && playerObj.GetComponent<PlayerScript>().gameOver==false) {
             //attack here
+            SoundControllerScript.SFXInstance.playRobotShoot();
             Rigidbody rb = Instantiate(Projectile, gunMuzzle.transform.position,Quaternion.identity).GetComponent<Rigidbody>();
             rb.AddForce((player.position - gunMuzzle.transform.position) * 150f);
             

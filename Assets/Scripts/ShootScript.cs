@@ -10,14 +10,17 @@ using TMPro;
 
 public class ShootScript : MonoBehaviour
 {
-    public int maxAmmo = 15;
+    public int maxAmmo ;
     public int currentAmmo;
     public int remainingAmmo;
     public float reloadTime = 1f;
     public bool isReloading = false;
     public Camera MainCam;
     public TextMeshProUGUI ammoText;
+    
     public Animator animator;
+    public GameObject gameBtnManager;
+    public bool outOfBullets = false;
 
 
     private ARRaycastManager arRaycastManager;
@@ -43,18 +46,27 @@ public class ShootScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+
         ammoText.SetText(currentAmmo.ToString() + "/" + remainingAmmo.ToString()) ;
         if (isReloading) {
             ammoText.SetText("Reloading...");
             return;
         }
-            
-        if(currentAmmo <= 0)
+        if (currentAmmo <= 0)
         {
-
+            currentAmmo = 0;
+            if (remainingAmmo <= 0)
+            {
+                remainingAmmo = 0;
+                outOfBullets = true;
+            }
+            if(!(currentAmmo<=0 && remainingAmmo<=0))
             StartCoroutine(ReloadGun());
             return;
         }
+
+
     }
 
     IEnumerator ReloadGun () {
@@ -63,14 +75,19 @@ public class ShootScript : MonoBehaviour
         yield return new WaitForSeconds(reloadTime);
         currentAmmo = maxAmmo;
         remainingAmmo = remainingAmmo - maxAmmo;
+        if (currentAmmo==7 && remainingAmmo < 0) {
+            remainingAmmo = 0;
+            currentAmmo = 0;
+        }
         animator.SetBool("Reloading", false);
         isReloading = false;
         
     }
     public void shootBullet() {
-        if (!isReloading) 
+        if (!isReloading && !outOfBullets) 
         {
             muzzleFlash.Play();
+            SoundControllerScript.SFXInstance.playGunshot();
 
             currentAmmo = currentAmmo - 1;
             
@@ -90,8 +107,13 @@ public class ShootScript : MonoBehaviour
                     ap.setHealth(curHealth);
 
                     Instantiate(impactFX, hitObj.point, Quaternion.LookRotation(hitObj.normal));
-                    if (curHealth<=0)
+                    if (curHealth <= 0)
+                    {
+                        gameBtnManager.GetComponent<GameButtonManagerScript>().killOneEnemy();
+                        SoundControllerScript.SFXInstance.playRobotDead();
                         Destroy(selection.parent.gameObject);
+                    }
+                        
             
 
                 }
@@ -103,11 +125,19 @@ public class ShootScript : MonoBehaviour
                     ap.setHealth(curHealth);
                     Instantiate(impactFX, hitObj.point, Quaternion.LookRotation(hitObj.normal));
                     if (curHealth <= 0)
+                    {
+                        gameBtnManager.GetComponent<GameButtonManagerScript>().killOneEnemy();
+                        SoundControllerScript.SFXInstance.playRobotDead();
                         Destroy(selection.gameObject);
+                    }
                 }
 
                 
             }
+        }
+        else
+        {
+            SoundControllerScript.SFXInstance.playReloading();
         }
         
 

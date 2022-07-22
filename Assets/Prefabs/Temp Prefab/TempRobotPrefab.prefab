@@ -349,6 +349,7 @@ MonoBehaviour:
   Projectile: {fileID: 4470623680817570534, guid: 51b76fce3b374944087af0685f70cc61, type: 3}
   slider: {fileID: 8969353705920304493}
   gunMuzzle: {fileID: 691432462382812088}
+  playerObj: {fileID: 6440238939712120506, guid: 2adfb20f74800e14f90f850f103a45ca, type: 3}
 --- !u!1 &1501539032809451897
 GameObject:
   m_ObjectHideFlags: 0
