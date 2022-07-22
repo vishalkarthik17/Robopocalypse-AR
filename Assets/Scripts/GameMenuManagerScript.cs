@@ -28,6 +28,11 @@ public class GameMenuManagerScript : MonoBehaviour
         Application.OpenURL("www.zapsplat.com");
     }
 
+    public void OpenDemoVideo()
+    {
+        Application.OpenURL("https://youtu.be/7vMKV1QLUGM");
+    }
+
     public void CloseSettingsPanel() {
         SettingsPanel.SetActive(false);
     }
